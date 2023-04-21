@@ -3,7 +3,7 @@
 }
 
 body {
-  background-color: rgb(210, 248, 249);
+  background-color: rgb(216, 235, 235);
 }
 
 p {
@@ -26,6 +26,16 @@ img {
   border: 1px solid black;
   border-radius: 5px;
   outline: none;
+  text-align: center;
+}
+.search-form {
+  background-color: rgba(247, 219, 239, 0.8);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  padding: 20px 0;
   text-align: center;
 }
 
@@ -55,6 +65,11 @@ img {
 
 .is-hidden {
   display: none;
+}
+.photo-card {
+  background-color: white;
+  box-shadow: 1px 1px 3px rgba(214, 231, 176, 0.12),
+    0px 1px 1px rgba(0, 0, 0, 0.14), 0px 2px 1px rgba(214, 237, 151, 0.2);
 }
 
 .gallery {

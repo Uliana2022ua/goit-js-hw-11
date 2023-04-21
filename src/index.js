@@ -99,7 +99,7 @@ function renderCards(cards) {
 </div>`;
       }
     )
-    
+ . join('');
 }
 
 function clearContainer() {
