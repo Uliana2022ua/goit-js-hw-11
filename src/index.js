@@ -50,8 +50,10 @@ async function fetchImage(url) {
     const cards = response.data;
     const lastPage = Math.ceil(response.data.totalHits / 40);
     if (lastPage === currentPage && lastPage > 1) {
-      alert("це все!");
+      Notiflix. Notify. failure("We're sorry, but you've reached the end of search results.");
       refs.loadMoreBtn.classList.add('is-hidden');
+
+      
       refs. cardEl. insertAdjacentHTML('beforeend',  renderCards(cards));
       lightbox. refresh();
       return;
