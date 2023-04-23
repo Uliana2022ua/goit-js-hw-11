@@ -30,14 +30,13 @@ function onSearch(e) {
   const  url  =  `${BASE_URL}?key=${API_KEY}&q=${searchQuerry}&type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${currentPage}`;
   if (searchQuerry === '') {
     refs. loadMoreBtn. classList. add('is-hidden');
-    Notiflix. Notify. failure('Enter something.');
+    Notiflix.Notify.failure(`Enter something.`);
+  
   } else {
     fetchImage(url). then(cards => {
-      if  (cards. total  ===  0) {
+      if (cards.total === 0) {
         refs. loadMoreBtn. classList. add('is-hidden');
-        Notiflix. Notify. failure(
-          'Sorry, there are no images matching your search query. Please try again.'
-        );
+        Notiflix. Notify. failure(`Sorry, there are no images matching your search query. Please try again.`);
       } else {
         Notiflix. Notify. success(`Hooray! We found ${cards. totalHits} images.`);
       }
@@ -45,11 +44,18 @@ function onSearch(e) {
   }
 }
 
-
 async function fetchImage(url) {
   try {
     const response = await axios(url);
-    const  cards  =  response. data;
+    const cards = response.data;
+    const lastPage = Math.ceil(response.data.totalHits / 40);
+    if (lastPage === currentPage && lastPage > 1) {
+      alert("це все!");
+      refs.loadMoreBtn.classList.add('is-hidden');
+      refs. cardEl. insertAdjacentHTML('beforeend',  renderCards(cards));
+      lightbox. refresh();
+      return;
+ }
     refs. cardEl. insertAdjacentHTML('beforeend',  renderCards(cards));
     currentPage += 1;
     refs. loadMoreBtn. classList. remove('is-hidden');
@@ -57,9 +63,7 @@ async function fetchImage(url) {
     return cards;
   } catch {
     refs. loadMoreBtn. classList. add('is-hidden');
-    Notiflix. Notify. failure(
-      "We're sorry, but you've reached the end of search results."
-    );
+    Notiflix. Notify. failure("We're sorry, but you've reached the end of search results.");
   }
 }
 
@@ -70,7 +74,7 @@ function onLoadMore() {
 
 function renderCards(cards) {
   return  cards. hits
-    . map(
+    .map(
       ({
         webformatURL,
         largeImageURL,
@@ -109,3 +113,4 @@ function clearContainer() {
 function resetPage() {
   currentPage = 1;
 }
+
