@@ -37,7 +37,12 @@ function onSearch(e) {
       if (cards.total === 0) {
         refs. loadMoreBtn. classList. add('is-hidden');
         Notiflix. Notify. failure(`Sorry, there are no images matching your search query. Please try again.`);
-      } else {
+      } else if (cards.totalHits < 40) {
+        Notiflix.Notify.success(`Hooray! We found ${cards.totalHits} images.`);
+        refs.loadMoreBtn.classList.add('is-hidden');
+        return;
+      }
+      else {
         Notiflix. Notify. success(`Hooray! We found ${cards. totalHits} images.`);
       }
     });
@@ -49,7 +54,7 @@ async function fetchImage(url) {
     const response = await axios(url);
     const cards = response.data;
     const lastPage = Math.ceil(response.data.totalHits / 40);
-    if (lastPage === currentPage && lastPage > 1) {
+    if (lastPage === currentPage && lastPage > 1 ) {
       Notiflix. Notify. failure("We're sorry, but you've reached the end of search results.");
       refs.loadMoreBtn.classList.add('is-hidden');
 
